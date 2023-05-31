@@ -16,34 +16,21 @@ func main() {
 }
 
 func GetDate(date string) (string, error) {
-	var count = 1
 	strToTime, err := time.Parse("20060102", date)
 	if err != nil {
 		log.Println("error cause:", err)
 		return "", err
 	}
-	strToTime = strToTime.AddDate(0, +count, 0)
-	var newDate = strToTime.Format("20060102")
-	// log.Println("new date b4 looping:", newDate)
-
-	if date[6:8] != newDate[6:8] {
-		for {
-			count++
-			strToTime, err = time.Parse("20060102", date)
-			if err != nil {
-				log.Println("error cause:", err)
-				return "", err
-			}
-			strToTime = strToTime.AddDate(0, +count, 0)
-			newDate = strToTime.Format("20060102")
-			// log.Println("new date after looping:", newDate)
-			if date[6:8] == newDate[6:8] {
-				break
-			}
+	nextDate := strToTime.AddDate(0, 1, 0)
+	var newDate = nextDate.Format("20060102")
+	execDay := strToTime.Day()
+	if execDay != nextDate.Day() {
+		strToTime = strToTime.AddDate(0, 2, 0)
+		newDate = strToTime.Format("20060102")
+		if execDay == strToTime.Day() {
+			return newDate, nil
 		}
+
 	}
-
-	// log.Println("check last 2 digit:", newDate[6:8])
-
 	return newDate, nil
 }

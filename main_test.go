@@ -15,6 +15,7 @@ func TestGetDate(t *testing.T) {
 		{inputDate: "20231031", want: "20231231"},
 		{inputDate: "20230331", want: "20230531"},
 		{inputDate: "20230531", want: "20230731"},
+		{inputDate: "20230131", want: "20230331"},
 	}
 
 	for _, test := range tests {
